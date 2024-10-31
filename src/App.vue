@@ -1,70 +1,97 @@
-<script setup>
-</script>
-
 <template>
-  <router-view></router-view>
+    <SpinnerLoader v-if="tabLoad" class="mx-auto my-40 h-[50px] w-[50px]" />
+    <!-- <DuplicateTab v-if="noTab" /> -->
+     <div v-else>
+        <DuplicateTab v-if="noTab"  />
+<div v-else>
+    <global-alert />
+    <router-view></router-view>
+     </div>
+   
+
+</div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
+<script setup>
+import DuplicateTab from './components/DuplicateTab.vue'
+// import { computed } from 'vue';
+// import { useStore } from 'vuex';
+// import GithubSVG from './assets/github.svg'
+import GlobalAlert from '/src/views/alert/GlobalAlert.vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
+     // Reactive state
+     const tabLoad = ref(true);
+      const noTab = ref(false);
+      let callCenterInterval = null;
+  
+      // Helper function to set a cookie
+      const setCookie = (cname, cvalue, seconds) => {
+        const d = new Date();
+        d.setTime(d.getTime() + seconds * 1000);
+        const expires = "expires=" + d.toUTCString();
+        document.cookie = `${cname}=${cvalue};${expires};path=/`;
+      };
+  
+      // Helper function to get a cookie
+      const getCookie = (cname) => {
+        const name = cname + "=";
+        const decodedCookie = decodeURIComponent(document.cookie);
+        const ca = decodedCookie.split(";");
+        for (let i = 0; i < ca.length; i++) {
+          let c = ca[i].trim();
+          if (c.indexOf(name) === 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+      };
+  
+      // Helper function to clear the cookie
+      const clearCookie = () => {
+        document.cookie = "ic_window_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      };
+  
+      // Function to validate the call center tab
+      const validateCallCenterTab = () => {
+        const winIdCookieDuration = 10; // in seconds
+  
+        if (!window.name) {
+          window.name = Math.random().toString();
+        }
+  
+        const icWindowId = getCookie("ic_window_id");
+  
+        if (!icWindowId || window.name === icWindowId) {
+          // One tab, set/clobber cookie
+          setCookie("ic_window_id", parseFloat(window.name), winIdCookieDuration);
+        } else if (icWindowId !== window.name) {
+          // Multiple tabs error
+          noTab.value = true;
+          clearInterval(callCenterInterval);
+          throw "Multiple call center tabs error. Program terminating.";
+        }
+      };
+  
+      // Lifecycle hook to run code when the component is mounted
+      onMounted(() => {
+        clearCookie();
+  
+        // Simulate a loading state for 2.5 seconds
+        setTimeout(() => {
+          tabLoad.value = false;
+        }, 2500);
+  
+        // Set an interval to validate tabs every 2 seconds
+        callCenterInterval = setInterval(validateCallCenterTab, 2000);
+      });
+  
+      // Lifecycle hook to clear interval when the component is destroyed
+      onBeforeUnmount(() => {
+        clearInterval(callCenterInterval);
+      });
+</script>
 
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
+<style lang="scss">
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
 </style>

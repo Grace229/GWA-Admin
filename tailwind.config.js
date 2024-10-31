@@ -1,12 +1,23 @@
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{vue,js,ts,jsx,tsx}",
-  ],
+// tailwind.config.js
+module.exports = {
+  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+  media: false,
+  // theme: {
+  //     extend: {},
+  // },
   theme: {
-    extend: {},
+      extend: {
+          screens: {
+              sm: '640px', // Small screens
+              md: '768px', // Medium screens
+              lmd: '940px',
+              lg: '1024px', // Large screens
+              xl: '1280px', // Extra-large screens
+          },
+      },
   },
-  plugins: [],
-}
-
+  variants: {
+      extend: {},
+  },
+  plugins: [require('@tailwindcss/forms')],
+};

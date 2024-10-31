@@ -1,0 +1,123 @@
+/* ./src/index.scss */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    /* .select2-dropdown {
+      @apply rounded-b-lg shadow-md;
+    } */
+
+    .logoClass {
+        @apply w-[90.66px] h-[29.72px];
+    }
+
+    .brandButton {
+        @apply text-blue-400 active:opacity-50 transition-all duration-300;
+        padding: 12px 20px;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 24px;
+        /* identical to box height, or 150% */
+
+        /* Base/White */
+
+        color: #ffffff;
+        /* Primary/600 */
+        // background: blue;
+        background: #00AA5A;
+        /* Primary/600 */
+
+        border: 1px solid #00AA5A;
+        /* Shadow/xs */
+
+        box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+        border-radius: 4px;
+    }
+
+    .disabledBrandButton {
+        @apply bg-[#EAECF0] border border-[#EAECF0];
+    }
+
+    .statsCardGrid3 {
+        @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6;
+    }
+
+    .text-wrap {
+        overflow-wrap: break-word;
+        word-wrap: break-word; /* Fallback for older browsers */
+    }
+
+    .carcardGrid {
+        @apply mx-auto max-w-[300px] sm:max-w-[100%] grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8;
+    }
+
+    .cancelButton {
+        padding: 10px 16px;
+
+        height: 40px;
+        font-weight: 600;
+        font-size: 14px;
+        color: #344054;
+
+        background: #ffffff;
+
+        border: 1px solid #d0d5dd;
+
+        box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+        border-radius: 8px;
+    }
+
+    .carPreviewDetailsList {
+        @apply grid grid-flow-row grid-cols-1 sm:grid-flow-col sm:grid-cols-2 sm:grid-rows-5 gap-x-4;
+    }
+
+    .adminSearchNFilter {
+        @apply gap-5 flex flex-col md:flex-row md:justify-between md:items-center;
+    }
+
+    .full-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .greenButton {
+        @apply bg-[#12B76A] flex items-center justify-center w-full rounded-lg px-[21.5px] py-2 text-sm font-semibold text-white shadow-sm;
+    }
+
+    .pagePadding {
+        @apply p-4;
+    }
+
+    .container {
+        @apply max-w-[1250px] mx-auto px-6;
+        /* p-6 xl:p-0 */
+    }
+
+    .disabled-page {
+        pointer-events: none !important;
+        // opacity: 0.5; /* Optionally, apply a visual cue for disabled elements */
+    }
+
+    .h1-p-text > h1 {
+        /* Styles for h1 that is a direct child of .h1-p-text*/
+        @apply text-[36px] sm:text-[48px];
+    }
+
+    .h1-p-text > p {
+        /* Styles for p that is a direct child of .h1-p-text*/
+        @apply text-[18px] sm:text-[20px];
+    }
+
+    .vendorDignupContainer {
+        @apply mx-auto md:mx-0;
+    }
+
+    .xs-shadow {
+        box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+    }
+}

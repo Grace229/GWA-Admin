@@ -1,0 +1,32 @@
+export let carsList = [
+    {
+        id: 2,
+        make: '2017 BMW X5',
+        mileage: '58,911 mi',
+        location: 'Lagos',
+        locallyUsed: true,
+        price: '$68,987',
+        status: 'Pending Review',
+        imageUrls: ['/Car1.png', '/Car2.png'],
+    },
+    {
+        id: 3,
+        make: '2017 BMW X5',
+        mileage: '58,911 mi',
+        location: 'Lagos',
+        locallyUsed: false,
+        price: '$68,987',
+        status: 'Eligibility Approved',
+        imageUrls: ['/Car1.png', '/Car2.png'],
+    },
+    {
+        id: 1,
+        make: '2017 BMW X5',
+        mileage: '58,911 mi',
+        location: 'Lagos',
+        locallyUsed: false,
+        price: '$68,987',
+        status: 'Paid',
+        imageUrls: ['/Car2.png', '/Car1.png'],
+    },
+];
