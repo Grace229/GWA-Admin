@@ -1,11 +1,11 @@
 <template>
     <div>
-        <Navigator />
+        <!-- <Navigator /> -->
 
-        <AllCars v-if="currentPage === 'all-cars'" />
+        <!-- <AllCars v-if="currentPage === 'all-cars'" /> -->
 
-        <CarParameters v-if="currentPage === 'car-parameters'" />
-        <CarFeatures v-if="currentPage === 'car-features'" />
+        <CarParameters  />
+        <!-- <CarFeatures v-if="currentPage === 'car-features'" /> -->
     </div>
 </template>
 

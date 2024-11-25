@@ -1,40 +1,20 @@
 <template>
     <div class="rounded-lg shadow-md bg-[#ffffff]">
-        <div class="relative min-h-[200px]">
-            <Carousel class="h-[200px]" v-model="slideIndex" :autoplay="3000000" :wrap-around="true" :transition="500" :itemsToShow="1">
-                <Slide class="h-[200px]" v-for="slide in car.pictures" :key="slide">
-                    <img class="carousel__item rounded-t-lg !w-[100%] !min-h-[200px]" :src="slide.fileUrl" :alt="car.brand" />
-                </Slide>
+        <div class="relative min-h-[100px]">
 
-                <!-- <template #addons>
-                    <navigation>
-                        <template #next>
-                            <CarouselNext class="text-white" />
-                        </template>
-                        <template #prev> <CarouselPrev class="text-white" /></template>
-                    </navigation>
-                </template> -->
-            </Carousel>
-            <div class="absolute inset-x-0 bottom-0 w-full flex items-center justify-center gap-[7px] mb-[15px]">
-                <button
-                    v-for="(content, index) in car.pictures"
-                    :key="content"
-                    :class="car.pictures[slideIndex] === car.pictures[index] ? 'bg-white' : 'inactivePagination'"
-                    @click="changeView(index)"
-                    class="bottom-2 h-[6px] w-[6px] rounded-[100%] bg-white"
-                ></button>
-            </div>
+           <img v-if="car.image?.imageValue" :src="car.image?.imageValue" class=" h-40 w-full" alt="" srcset="">
+       
         </div>
-        <div @click.self="navigateToPreview(car.financeOptionText, car.id)" class="cursor-pointer flex flex-col gap-3 pt-[21px] px-[19px] bg-[#ffffff]">
-            <div @click.self="navigateToPreview(car.financeOptionText, car.id)" class="flex items-center justify-between font-medium text-xs">
+        <div class="cursor-pointer flex flex-col gap-3 pt-[21px] px-[19px] bg-[#ffffff]">
+            <div class="flex items-center justify-between font-medium text-xs">
                 <!-- <button v-if="car.locallyUsed" class="bg-[#DC6803] text-[#FFFFFF] rounded-[3px] py-[5px] px-[8px]">Locally Used</button>
                 <button v-else class="bg-[#5D6B98] text-[#FFFFFF] rounded-[3px] py-[5px] px-[8px]">Foreign Used</button> -->
-                <h2 @click.self="navigateToPreview(car.financeOptionText, car.id)" class="font-semibold text-sm text-[#30374F]">{{ car.year }} {{ car.brand }} {{ car.model }}</h2>
+                <h2 class="font-semibold text-sm text-[#30374F]">{{ car.name }} ({{ car.services.join(", ") }})</h2>
                 <!-- {{ car.financeOptionText }} -->
 
-                <div><Heart :carDetails="car" /></div>
+                <!-- <div><Heart :carDetails="car" /></div> -->
             </div>
-            <div @click.self="navigateToPreview(car.financeOptionText, car.id)" class="mb-[5px] flex font-normal text-xs text-[#4A5578] gap-[19px]">
+            <div class="mb-[5px] flex font-normal text-xs text-[#4A5578] gap-[19px]">
                 <span class="flex items-center gap-1"
                     ><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -45,32 +25,14 @@
                             stroke-linejoin="round"
                         />
                     </svg>
-                    {{ car.mileage == 0 ? '0.00' : formatCurrency(car.mileage).slice(1, car.mileage) }}
+                    {{  formatCurrency(car.price) }}
                 </span>
-                <span class="flex items-center gap-1"
-                    ><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M6 6.5C6.82843 6.5 7.5 5.82843 7.5 5C7.5 4.17157 6.82843 3.5 6 3.5C5.17157 3.5 4.5 4.17157 4.5 5C4.5 5.82843 5.17157 6.5 6 6.5Z"
-                            stroke="#4A5578"
-                            stroke-width="1.2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        />
-                        <path
-                            d="M6 11C8 9 10 7.20914 10 5C10 2.79086 8.20914 1 6 1C3.79086 1 2 2.79086 2 5C2 7.20914 4 9 6 11Z"
-                            stroke="#4A5578"
-                            stroke-width="1.2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        />
-                    </svg>
-                    {{ car.location }}</span
-                >
+    
             </div>
-            <h1 @click.self="navigateToPreview(car.financeOptionText, car.id)" class="font-bold text-xl text-[#30374F]">{{ formatCurrency(car.price) }}</h1>
+            <!-- <h1 class="font-bold text-xl text-[#30374F]">{{ formatCurrency(car.price) }}</h1> -->
         </div>
         <div @click.self="navigateToPreview(car.financeOptionText, car.id)" class="pb-[19px] px-[19px]">
-            <p v-if="car.deal" class="mt-[5px] text-xs font-semibold text-[#FF6600]">{{ car.deal }}</p>
+            <p v-if="car.deal" class="mt-[5px] text-xs font-semibold text-[#FF6600]"> carjj.deal</p>
         </div>
     </div>
 </template>

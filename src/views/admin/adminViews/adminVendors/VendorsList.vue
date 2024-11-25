@@ -91,7 +91,7 @@
                                                     <span>Active</span>
                                                 </div>
 
-                                                <div v-if="vendor.status == 'pending'" class="text-[#DC6803] bg-[#FEF3F2] py-[2px] px-2 max-w-max rounded-[16px]">
+                                                <div v-else class="text-[#DC6803] bg-[#FEF3F2] py-[2px] px-2 max-w-max rounded-[16px]">
                                                     <span>Pending</span>
                                                 </div>
                                             </div>

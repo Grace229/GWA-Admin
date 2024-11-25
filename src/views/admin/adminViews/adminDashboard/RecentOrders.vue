@@ -36,7 +36,7 @@
 
         <!-- //table -->
         <div class="mb-10">
-            <div class="pr-6 pt-3"><span class="font-semibold text-sm text-[#475467]">Recent Orders</span></div>
+            <div class="pr-6 pt-3"><span class="font-semibold text-sm text-[#475467]">Recent Transactions</span></div>
 
             <div class="mt-[25px] flow-root">
                 <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -56,18 +56,18 @@
                                     <tr>
                                         <th scope="col" class="py-3.5 pl-6 pr-3 text-left text-xs font-medium text-[#475467]">Order No</th>
                                         <th scope="col" class="px-3 py-3.5 text-left text-xs font-medium text-[#475467]">Customer Name</th>
-                                        <th scope="col" class="px-3 py-3.5 text-left text-xs font-medium text-[#475467]">Product</th>
+                                        <th scope="col" class="px-3 py-3.5 text-left text-xs font-medium text-[#475467]">Subscription</th>
 
-                                        <th scope="col" class="px-3 py-3.5 text-left text-xs font-medium text-[#475467]">Order Type</th>
+                                        <th scope="col" class="px-3 py-3.5 text-left text-xs font-medium text-[#475467]">AddOns</th>
 
-                                        <th scope="col" class="px-3 py-3.5 text-left text-xs font-medium text-[#475467]">Order Status</th>
+                                        <th scope="col" class="px-3 py-3.5 text-left text-xs font-medium text-[#475467]">Date</th>
 
                                         <th scope="col" class="px-3 py-3.5 text-left text-xs font-medium text-[#475467]">Amount</th>
                                         <th scope="col" class="px-3 py-3.5 text-left text-xs font-medium text-[#475467]">Payment Status</th>
 
-                                        <th scope="col" class="relative py-3.5 pl-3 pr-6">
+                                        <!-- <th scope="col" class="relative py-3.5 pl-3 pr-6">
                                             <span class="sr-only">Menu</span>
-                                        </th>
+                                        </th> -->
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-200 bg-white">
@@ -82,63 +82,26 @@
                                         <td class="whitespace-nowrap px-3 py-4 text-sm font-normal text-[#475467]">{{ order.product }}</td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm font-normal text-[#475467]">{{ Constants.orderTypes[order.orderType] }}</td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm font-normal text-[#475467]">
-                                            <div class="flex">
-                                                <div v-if="Constants.orderStatus[order.orderStatus] === 'approved'" class="px-[10px] py-[2px] rounded-[16px] text-[#027A48] bg-[#ECFDF3] max-w-max">
-                                                    <span>Approved</span>
-                                                </div>
-                                                <div
-                                                    v-if="Constants.orderStatus[order.orderStatus] === 'eligibilityApproved'"
-                                                    class="px-[10px] py-[2px] rounded-[16px] text-[#175CD3 ] bg-[#EFF8FF] max-w-max"
-                                                >
-                                                    <span>Eligibility Approved</span>
-                                                </div>
-
-                                                <div v-if="Constants.orderStatus[order.orderStatus] === 'pending'" class="px-[10px] py-[2px] rounded-[16px] text-[#DC6803] bg-[#FEF0C7] max-w-max">
-                                                    <span>Pending</span>
-                                                </div>
-
-                                                <div v-if="Constants.orderStatus[order.orderStatus] === 'rejected'" class="px-[10px] py-[2px] rounded-[16px] text-[#B42318] bg-[#FEF3F2] max-w-max">
-                                                    <span>Rejected</span>
-                                                </div>
-                                                <div
-                                                    v-if="Constants.orderStatus[order.orderStatus] === 'eligibilityRejected'"
-                                                    class="px-[10px] py-[2px] rounded-[16px] text-[#B42318] bg-[#FEF3F2] max-w-max"
-                                                >
-                                                    <span>Eligibility Rejected</span>
-                                                </div>
-                                                <div
-                                                    class="ml-2 px-[10px] py-[2px] rounded-[16px] text-[#344054] bg-[#F2F4F7] max-w-max"
-                                                    v-if="order.inspected && Constants.deliveryStatus[order.deliveryStatus] !== 'delivered'"
-                                                >
-                                                    <span>Inspected</span>
-                                                </div>
-                                                <!-- {{ Constants.deliveryStatus[order.deliveryStatus] }} -->
-                                                <div
-                                                    class="ml-2 px-[10px] py-[2px] rounded-[16px] text-[#027A48] bg-[#ECFDF3] max-w-max"
-                                                    v-if="Constants.deliveryStatus[order.deliveryStatus] === 'delivered'"
-                                                >
-                                                    <span>Delivered</span>
-                                                </div>
-                                            </div>
+                                          {{ Util.dateFormat(order.createdAt) }}
                                         </td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm font-normal text-[#475467]">{{ order.amount == 0 ? '0:00' : formatCurrency(order.amount) }}</td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm font-normal text-[#475467]">
-                                            <div v-if="Constants.paymentStatus[order.paymentStatus] === 'paid'" class="px-[10px] py-[2px] rounded-[16px] text-[#027A48] bg-[#ECFDF3] max-w-max">
+                                            <div v-if="order.status === 'success'" class="px-[10px] py-[2px] rounded-[16px] text-[#027A48] bg-[#ECFDF3] max-w-max">
                                                 <span>Paid</span>
                                             </div>
-                                            <div v-if="Constants.paymentStatus[order.paymentStatus] === 'pending'" class="px-[10px] py-[2px] rounded-[16px] text-[#DC6803] bg-[#FEF0C7] max-w-max">
+                                            <div v-if="order.status === 'pending'" class="px-[10px] py-[2px] rounded-[16px] text-[#DC6803] bg-[#FEF0C7] max-w-max">
                                                 <span>Pending</span>
                                             </div>
 
-                                            <div v-if="Constants.paymentStatus[order.paymentStatus] === 'notpaid'" class="px-[10px] py-[2px] rounded-[16px] text-[#DC6803] bg-[#FEF0C7] max-w-max">
+                                            <div v-if="order.status === 'notpaid'" class="px-[10px] py-[2px] rounded-[16px] text-[#DC6803] bg-[#FEF0C7] max-w-max">
                                                 <span>Unpaid</span>
                                             </div>
                                         </td>
-                                        <td class="relative whitespace-nowrap py-4 pl-3 pr-6 text-right text-xs font-normal text-[#475467]">
+                                        <!-- <td class="relative whitespace-nowrap py-4 pl-3 pr-6 text-right text-xs font-normal text-[#475467]">
                                             <div>
                                                 <RecentOrdersMenu @proceed="optionPrompt" :order="order" :menuType="'Orders Listing'" />
                                             </div>
-                                        </td>
+                                        </td> -->
                                     </tr>
                                 </tbody>
                             </table>
@@ -238,12 +201,13 @@ const optionPrompt = ({ menuItem, order }) => {
 const getOrders = () => {
     loading.value = true;
     getAllOrders(
-        state.params,
+        // state.params,
         (res) => {
             loading.value = false;
+          console.log(res)  
 
-            orders.value = res.data.data;
-            state.params.total = res.data.total;
+            orders.value = res.data.data.data;
+            state.params.total = res.data.data.total;
         },
         (err) => {
             loading.value = false;

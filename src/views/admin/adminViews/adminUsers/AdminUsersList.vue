@@ -23,14 +23,15 @@
                                 <span style="color: #999999" class="mt-6 fs-16 fw-400">Nothing to see</span>
                             </div>
                             <div v-else class="overflow-auto shadow-[0px_1px_2px_rgba(16,24,40,0.05)] ring-1 ring-black ring-opacity-5 sm:rounded-b-lg">
+                              
                                 <table class="overflow-y-auto min-w-full divide-y divide-[#EAECF0]">
                                     <thead class="">
                                         <tr>
-                                            <th scope="col" class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-xs font-medium text-[#475467] sm:pl-6">Username</th>
+                                            <th scope="col" class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-xs font-medium text-[#475467] sm:pl-6">FullName</th>
                                             <th scope="col" class="whitespace-nowrap px-3 py-3.5 text-left text-xs font-medium text-[#475467]">Email address</th>
                                             <th scope="col" class="whitespace-nowrap px-3 py-3.5 text-left text-xs font-medium text-[#475467]">Phone Number</th>
                                             <th scope="col" class="whitespace-nowrap px-3 py-3.5 text-left text-xs font-medium text-[#475467]">Accounnt Type</th>
-                                            <th scope="col" class="whitespace-nowrap px-3 py-3.5 text-left text-xs font-medium text-[#475467]">Last Login</th>
+                                            <th scope="col" class="whitespace-nowrap px-3 py-3.5 text-left text-xs font-medium text-[#475467]">Join Date</th>
                                             <th scope="col" class="whitespace-nowrap px-3 py-3.5 text-left text-xs font-medium text-[#475467]">Status</th>
                                             <th scope="col" class="sr-only px-3 py-3.5 text-left text-xs font-medium text-[#475467]">Actions</th>
                                         </tr>
@@ -39,7 +40,7 @@
                                         <tr v-for="(adminUser, index) in adminUsers" :key="adminUser.id" :class="index % 2 !== 0 ? undefined : 'bg-gray-50'">
                                             <td class="capitalize whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-[#101828] sm:pl-6">
                                                 <div class="flex flex-col">
-                                                    <span class="font-normal text-[#475467]">{{ adminUser.userName }} </span>
+                                                    <span class="font-normal text-[#475467]">{{ adminUser.fullName }} </span>
                                                 </div>
                                             </td>
 
@@ -57,25 +58,25 @@
 
                                             <td class="whitespace-nowrap py-4 px-3 text-sm font-medium text-[#101828]">
                                                 <div class="flex flex-col">
-                                                    <span class="font-normal text-[#475467]">{{ adminUser?.accountType ? Constants.accountTypeEnum[adminUser?.accountType] : 'Nil' }}</span>
+                                                    <span class="font-normal text-[#475467]">{{ adminUser.roles[0].roleId.name }}</span>
                                                 </div>
                                             </td>
 
                                             <td class="whitespace-nowrap py-4 px-3 text-sm font-medium text-[#101828]">
                                                 <div class="flex flex-col">
-                                                    <span class="font-normal text-[#475467]">{{ Util.dateFormat(adminUser.lastLogin) }}</span>
+                                                    <span class="font-normal text-[#475467]">{{ Util.dateFormat(adminUser.createdAt) }}</span>
                                                 </div>
                                             </td>
 
                                             <td class="whitespace-nowrap py-4 px-3 text-sm font-medium text-[#101828]">
-                                                <div v-if="adminUser.status === 'Active'" class="flex items-center gap-1 text-[#027A48] bg-[#ECFDF3] py-[2px] px-2 max-w-max rounded-[16px]">
+                                                <div v-if="adminUser.status === 'active'" class="flex items-center gap-1 text-[#027A48] bg-[#ECFDF3] py-[2px] px-2 max-w-max rounded-[16px]">
                                                     <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                         <circle cx="4.00001" cy="4" r="3" fill="#12B76A" />
                                                     </svg>
                                                     <span>Active</span>
                                                 </div>
 
-                                                <div v-if="adminUser.status === 'Pending'" class="flex items-center gap-1 text-[#DC6803] bg-[#FEF0C7] py-[2px] px-2 max-w-max rounded-[16px]">
+                                                <div v-if="adminUser.status === 'pending'" class="flex items-center gap-1 text-[#DC6803] bg-[#FEF0C7] py-[2px] px-2 max-w-max rounded-[16px]">
                                                     <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                         <circle cx="4" cy="4" r="3" fill="#F79009" />
                                                     </svg>
@@ -83,7 +84,7 @@
                                                     <span>Pending</span>
                                                 </div>
 
-                                                <div v-if="adminUser.status === 'Blocked'" class="flex items-center gap-1 text-[#B42318] bg-[#FEF3F2] py-[2px] px-2 max-w-max rounded-[16px]">
+                                                <div v-if="adminUser.status === 'blocked'" class="flex items-center gap-1 text-[#B42318] bg-[#FEF3F2] py-[2px] px-2 max-w-max rounded-[16px]">
                                                     <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                         <circle cx="4.00001" cy="4" r="3" fill="#F04438" />
                                                     </svg>
@@ -269,11 +270,12 @@ const emptyadminUsersObj = ref({});
 const getAllAdminUsers = () => {
     loadingUsers.value = true;
     getAdminUsers(
-        searchParams,
+        // searchParams,
         (res) => {
             loadingUsers.value = false;
-            adminUsers.value = res.data.data;
-            searchParams.total = res.data.total;
+            console.log(res)
+            adminUsers.value = res.data.data.data;
+            searchParams.total = res.data.data.total;
         },
         (err) => {
             loadingUsers.value = false;

@@ -23,6 +23,7 @@ import CarCardLoading from '@/components/reusable/CarCardLoading.vue';
 import { Log } from '@/util';
 import CarouselCard from '@/views/search/CarouselCard.vue';
 import { getAllCars } from '@/services/GeneralServices.js';
+import { getParams, getFees } from '@/services/AdminServices.js';
 import { reactive, ref, onBeforeMount, inject, computed } from 'vue';
 import { useStore } from 'vuex';
 
@@ -73,14 +74,14 @@ const prepareParams = () => {
 
 const getCars = () => {
     carsLoading.value = true;
-    getAllCars(
-        prepareParams(),
+    getFees(
+        // prepareParams(),
         (res) => {
             carsLoading.value = false;
-            searchParams.total = res.data.total;
+            searchParams.total = res.data.data.total;
 
-            if (res.data.data.length) {
-                cars.value = res.data.data;
+            if (res.data.data.data.length) {
+                cars.value = res.data.data.data;
             }
         },
         (err) => {

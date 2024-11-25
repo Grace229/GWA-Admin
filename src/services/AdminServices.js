@@ -16,11 +16,18 @@ export const getAllCustomers = ({ sortBy, descending, searchText, profileStatusS
 export const updateCustomerProfile = (data, successHandler, errorHandler) => {
     return Web.put(Constants.ADMIN_API_BASE + '/Individuals/update-profilestatus', data, successHandler, errorHandler);
 };
-
 export const getAllVendors = ( successHandler, errorHandler) => {
     return Web.get(
         Constants.API_BASE +
             `/users`,
+        successHandler,
+        errorHandler
+    );
+};
+export const getAllSubscribers = ( successHandler, errorHandler) => {
+    return Web.get(
+        Constants.API_BASE +
+            `/analytics/subscribers`,
         successHandler,
         errorHandler
     );
@@ -38,12 +45,10 @@ export const vendorProfileStatusUpdate = (data, successHandler, errorHandler) =>
     return Web.put(Constants.ADMIN_API_BASE + '/Vendor/update-profilestatus', data, successHandler, errorHandler);
 };
 
-export const getAllOrders = ({ location, descending, searchText, orderSort, orderType, pageNumber, pageSize }, successHandler, errorHandler) => {
+export const getAllOrders = (successHandler, errorHandler) => {
     return Web.get(
-        Constants.ADMIN_API_BASE +
-            `/Orders/get-all?Descending=${descending}${
-                location ? '&Location=' + location : ''
-            }&SearchText=${searchText}&OrderSort=${orderSort}&OrderType=${orderType}&PageNumber=${pageNumber}&PageSize=${pageSize}`,
+        Constants.API_BASE +
+            `/transactions`,
         successHandler,
         errorHandler
     );
@@ -61,7 +66,7 @@ export const getFees = (successHandler, errorHandler) => {
     return Web.get(Constants.API_BASE + `/subscriptions`, successHandler, errorHandler);
 };
 
-export const updateFee = ({ id },data, successHandler, errorHandler) => {
+export const updateFee = (id, data, successHandler, errorHandler) => {
     return Web.patch(Constants.API_BASE + `/subscriptions/${id}`, data, successHandler, errorHandler);
 };
 
@@ -74,15 +79,15 @@ export const deleteFee = ({ id }, successHandler, errorHandler) => {
 };
 
 export const getParams = (successHandler, errorHandler) => {
-    return Web.get(Constants.API_BASE + `/Parameters/get-all`, successHandler, errorHandler);
+    return Web.get(Constants.API_BASE + `/recommendations`, successHandler, errorHandler);
 };
 
 export const addParam = (data, successHandler, errorHandler) => {
-    return Web.post(Constants.API_BASE + `/Parameters/create`, data, successHandler, errorHandler);
+    return Web.post(Constants.API_BASE + `/recommendations`, data, successHandler, errorHandler);
 };
 
-export const updateParam = (data, successHandler, errorHandler) => {
-    return Web.put(Constants.API_BASE + `/Parameters/update`, data, successHandler, errorHandler);
+export const updateParam = (id, data, successHandler, errorHandler) => {
+    return Web.patch(Constants.API_BASE + `/recommendations/${id}`, data, successHandler, errorHandler);
 };
 
 export const deleteParam = ({ parameterId, permanent }, successHandler, errorHandler) => {
@@ -122,8 +127,8 @@ export const getCommissions = (successHandler, errorHandler) => {
     return Web.get(Constants.API_BASE + `/addons`, successHandler, errorHandler);
 };
 
-export const updateCommission = (data, successHandler, errorHandler) => {
-    return Web.put(Constants.ADMIN_API_BASE + `/Commission/update`, data, successHandler, errorHandler);
+export const updateCommission = (id, data, successHandler, errorHandler) => {
+    return Web.patch(Constants.API_BASE + `/addons/${id}`, data, successHandler, errorHandler);
 };
 
 export const addCommission = (data, successHandler, errorHandler) => {
@@ -213,8 +218,8 @@ export const editAdmin = (data, successHandler, errorHandler) => {
     return Web.post(Constants.ADMIN_API_BASE + `/Users/Edit`, data, successHandler, errorHandler);
 };
 
-export const getAdminUsers = ({ adminOnly, pageNumber, pageSize }, successHandler, errorHandler) => {
-    return Web.get(Constants.ADMIN_API_BASE + `/Users/get-all?AdminOnly=${adminOnly}&PageNumber=${pageNumber}&PageSize=${pageSize}`, successHandler, errorHandler);
+export const getAdminUsers = ( successHandler, errorHandler) => {
+    return Web.get(Constants.API_BASE + `/users/admins`, successHandler, errorHandler);
 };
 
 export const deleteUser = (data, successHandler, errorHandler) => {
@@ -229,8 +234,8 @@ export const enableUser = (data, successHandler, errorHandler) => {
     return Web.put(Constants.ADMIN_API_BASE + `/Users/enable-user`, data, successHandler, errorHandler);
 };
 
-export const getAdminStats = ({ from, to }, successHandler, errorHandler) => {
-    return Web.get(Constants.ADMIN_API_BASE + `/dashboard/get-stats?From=${from}&To=${to}`, successHandler, errorHandler);
+export const getAdminStats = ( successHandler, errorHandler) => {
+    return Web.get(Constants.API_BASE + `/analytics`, successHandler, errorHandler);
 };
 
 export const getAdminSalesChart = ({ from, to }, successHandler, errorHandler) => {

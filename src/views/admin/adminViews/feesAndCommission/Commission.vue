@@ -174,10 +174,11 @@ const getAllCommissions = () => {
     );
 };
 
-const action = ({ action, data }) => {
+const action = ({ action, id, data }) => {
     if (action === 'Edit Commission') {
         actionLoading.value = true;
         updateCommission(
+            id,
             data,
             (res) => {
                 actionLoading.value = false;

@@ -151,11 +151,11 @@ export default class Web {
         axios.delete(url).then(successCallback).catch(errorCallback);
     }
 
-    static patch(url, successCallback, errorCallback) {
-        Web.patchAbsolute(Web.BASE_URL + url, successCallback, errorCallback);
+    static patch(url, data, successCallback, errorCallback) {
+        Web.patchAbsolute(Web.BASE_URL + url, data, successCallback, errorCallback);
     }
 
-    static patchAbsolute(url, successCallback, errorCallback) {
-        axios.patch(url).then(successCallback).catch(errorCallback);
+    static patchAbsolute(url, data, successCallback, errorCallback) {
+        axios.patch(url, data).then(successCallback).catch(errorCallback);
     }
 }

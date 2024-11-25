@@ -37,7 +37,7 @@
                                 <div class="grid grid-cols-2 gap-6">
                                     <div class="col-span-2 grid grid-cols-2 gap-4">
                                         <div class="col-span-2">
-                                            <label for="name" class="block text-sm font-medium text-[#344054]">Name</label>
+                                            <label for="name" class="block text-sm font-medium text-[#344054]">Description</label>
                                             <div class="mt-1">
                                                 <input
                                                     type="text"
@@ -60,16 +60,15 @@
                                             </div>
                                         </div>
                                         <div class="col-span-2">
-                                            <label for="type" class="block text-sm font-medium text-[#344054]">Type</label>
-                                            <div class="mt-1">
-                                                <IdSelect class="h-[44px]" :options="paramTypes" v-model="form.parameterType" label="Select Parameter Type" :modelValue="form.parameterType" />
-                                            </div>
+                                            <div class="" :class="{ 'input--error': v$.pictures.$errors }">
+                                            <FileUploader @fileSelected="handleFile" />
 
-                                            <div class="text-red-400 mt-1 text-xs" v-for="error of v$.parameterType.$errors" :key="error.$uid">
-                                                <div class="text-red-400">
-                                                    {{ error.$message }}
-                                                </div>
-                                            </div>
+                        <div class="text-red-400 mt-1 text-xs" v-for="error of v$.pictures.$errors" :key="error.$uid">
+                            <div class="text-red-400">
+                                {{ error.$message }}
+                            </div>
+                        </div>
+                    </div>
                                         </div>
 
                                         <div class="col-span-2 mt-[14px]">
@@ -97,7 +96,8 @@ import { ref, inject, reactive, watch, defineEmits } from 'vue';
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue';
 import useVuelidate from '@vuelidate/core';
 import { required, helpers } from '@vuelidate/validators';
-import CurrencyInput from '@/components/reusable/CustomInputs/CurrencyInput.vue';
+import FileUploader from '@/components/reusable/CustomInputs/FileUploader.vue';
+
 const emits = defineEmits(['proceed']);
 const paramTypes = Constants.paramTypesMenu;
 
@@ -110,18 +110,23 @@ const close = () => {
 };
 
 const form = reactive({
-    parameterType: '0',
     name: '',
+    pictures: ''
 });
 
 const rules = {
-    parameterType: {
-        required: helpers.withMessage('Type is required', required),
+    pictures: {
+        required: helpers.withMessage('Picture is required', required),
+        // minLength: helpers.withMessage('Picture must be uploaded', minLength(1)),
     },
 
     name: {
         required: helpers.withMessage('Name is required', required),
     },
+};
+const handleFile = (file) => {
+    console.log(file)
+    form.pictures = file;
 };
 
 const v$ = useVuelidate(rules, form);
@@ -130,32 +135,29 @@ const submit = async () => {
     const validity = await v$.value.$validate();
     if (!validity) return;
 
-    if (toggleAddAndEditModalText.value.title === 'Edit Parameter') {
-        const obj = {
-            parameterId: toggleAddAndEditModalText.value.param.id,
-            name: form.name,
-            parameterType: Number(form.parameterType),
-        };
-        emits('proceed', { action: 'Edit Parameter', data: obj });
+    if (toggleAddAndEditModalText.value.title === 'Edit Recommendation') {
+        const formData = new FormData();
+        formData.append('description', form.name);
+        formData.append('image', form.pictures);
+        emits('proceed', { action: 'Edit Parameter', data: formData });
     }
 
-    if (toggleAddAndEditModalText.value.title === 'New Parameter') {
-        const obj = {
-            name: form.name,
-            parameterType: Number(form.parameterType),
-        };
-        emits('proceed', { action: 'New Parameter', data: obj });
+    if (toggleAddAndEditModalText.value.title === 'New Recommendation') {
+        const formData = new FormData();
+        formData.append('description', form.name);
+        formData.append('image', form.pictures);
+        emits('proceed', { action: 'New Parameter', data: formData });
     }
 
     // close();
 };
 
 watch(isAddAndEditOpen, (newValue) => {
-    if (newValue === true && toggleAddAndEditModalText.value.title === 'Edit Parameter') {
+    if (newValue === true && toggleAddAndEditModalText.value.title === 'Edit Recommendation') {
         //populate form inputs edit data
 
-        form.parameterType = toggleAddAndEditModalText.value.param.parameterType;
-        form.name = toggleAddAndEditModalText.value.param.name;
+        // form.pictures = toggleAddAndEditModalText.value.param.image.imageValue;
+        form.name = toggleAddAndEditModalText.value.param.description;
     }
     // else {
     //set initial add fee form state to default values

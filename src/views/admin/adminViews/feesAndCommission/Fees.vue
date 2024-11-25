@@ -186,9 +186,10 @@ const action = ({ action, data }) => {
     if (action === 'Edit Fees') {
         actionLoading.value = true;
         updateFee(
-            { id: selectedFee.value.id },
+            selectedFee.value.id,
             data,
             (res) => {
+                console.log(res)
                 actionLoading.value = false;
                 Util.handleGlobalAlert(true, 'success', 'Subscription Successfully Updated');
                 toggleAddAndEditModal();

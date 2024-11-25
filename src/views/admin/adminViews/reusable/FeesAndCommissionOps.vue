@@ -105,7 +105,7 @@
                                                     {{ error.$message }}
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> 
                                         <div class="col-span-1" v-if="toggleAddAndEditModalText.title === 'Edit Subscription' || toggleAddAndEditModalText.title === 'New Subscription'">
                                             <label for="amount" class="block text-sm font-medium text-[#344054]">Services</label>
                                             <div class="mt-1">
@@ -120,11 +120,6 @@
                                         </div>
                                         <div class="" :class="{ 'input--error': v$.pictures.$errors }">
                                             <FileUploader @fileSelected="handleFile" />
-    <div v-if="uploadedFile" class="mt-4">
-      <h3 class="font-semibold">Selected File:</h3>
-      <p>Name: {{ uploadedFile.name }}</p>
-      <p>Size: {{ formatSize(uploadedFile.size) }}</p>
-    </div>
 
                         <div class="text-red-400 mt-1 text-xs" v-for="error of v$.pictures.$errors" :key="error.$uid">
                             <div class="text-red-400">
@@ -258,12 +253,13 @@ const submit = async () => {
         emits('proceed', { action: 'New Commission', data: formData });
     }
     if (toggleAddAndEditModalText.value.title === 'Edit AddOns') {
-        const obj = {
-            id: toggleAddAndEditModalText.value.commission.id,
-            name: form.name,
-            amount: form.amount,
-        };
-        emits('proceed', { action: 'Edit Commission', data: obj });
+        const id = toggleAddAndEditModalText.value.commission.id
+        const formData = new FormData();
+        formData.append('name', form.name);
+        formData.append('price', form.amount);
+        formData.append('image', form.pictures);
+      
+        emits('proceed', { action: 'Edit Commission', id, data: formData });
     }
 
     // close();
@@ -277,7 +273,6 @@ watch(isAddAndEditOpen, (newValue) => {
         form.name = toggleAddAndEditModalText.value.fee.name;
         form.duration = toggleAddAndEditModalText.value.fee.durationInMonths; // Assuming duration is part of fee
         selectedOptions.value = toggleAddAndEditModalText.value.fee.services || [];
-        form.pictures = toggleAddAndEditModalText.value.fee.image
     }
 
     if (newValue === true && toggleAddAndEditModalText.value.title === 'Edit AddOns') {

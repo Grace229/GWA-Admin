@@ -17,17 +17,9 @@ const currentPage = inject('currentPage');
 
 const navItems = [
     {
-        name: 'All Cars',
-        routeParam: 'all-cars',
-    },
-    {
-        name: 'Car Parameters',
+        name: 'Recommendations',
         routeParam: 'car-parameters',
-    },
-    {
-        name: 'Car Features',
-        routeParam: 'car-features',
-    },
+    }
 ];
 </script>
 

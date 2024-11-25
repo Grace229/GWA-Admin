@@ -99,7 +99,7 @@ const routes = [
             {
                 path: '/admin/orders',
 
-                name: 'Order Management',
+                name: 'Transactions',
                 component: OrdersIndex,
                 children: [
                     {
@@ -141,11 +141,11 @@ const routes = [
             {
                 path: '/admin/products',
                 redirect: '/admin/products/all-cars',
-                name: 'Product Management',
+                name: 'Recommendations',
                 component: ProductsIndex,
                 children: [
                     {
-                        path: '/admin/products/:list',
+                        path: '/admin/products',
                         name: 'Product Listing',
                         component: () => import('@/views/admin/adminViews/adminProducts/Products.vue'),
                     },
@@ -316,42 +316,38 @@ const routes = [
         name: 'ConfirmVendorEmail',
         component: () => import('/src/views/signup/ConfirmVendorEmail.vue'),
     },
-    // {
-    //     path: '/',
-    //     name: 'LandingPageBaseLayout',
-    //     component: LandingPageBaseLayout,
-    //     children: [
-    //         {
-    //             path: '',
-    //             name: 'LandingPage',
-    //             component: LandingPage,
-    //             meta: {
-    //                 skipAuth: true,
-    //             },
-    //         },
-    //         {
-    //             path: '/buy',
-    //             name: 'BuyACar',
-    //             component: BuyACar,
-    //             meta: {
-    //                 skipAuth: true,
-    //             },
-    //         },
-    //         {
-    //             path: '/lease',
-    //             name: 'LeaseACar',
-    //             component: LeaseACar,
-    //             meta: {
-    //                 skipAuth: true,
-    //             },
-    //         },
+    {
+        path: '/landing',
+        name: 'LandingPageBaseLayout',
+        component: LandingPageBaseLayout,
+        children: [
+            {
+                path: '',
+                name: 'LandingPage',
+                component: LandingPage,
+                meta: {
+                    skipAuth: true,
+                },
+            },
+            {
+                path: '/buy',
+                name: 'BuyACar',
+                component: BuyACar,
+                meta: {
+                    skipAuth: true,
+                },
+            },
+            {
+                path: '/lease',
+                name: 'LeaseACar',
+                component: LeaseACar,
+                meta: {
+                    skipAuth: true,
+                },
+            },
 
-    //         {
-    //             path: '/rent',
-    //             name: 'RentACar',
-    //             component: RentACar,
-    //             meta: {
-    //           
+] 
+},     
     {
         path: '/:catchAll(.*)',
         name: 'Not found',
@@ -361,21 +357,21 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(),
     routes,
-    scrollBehavior() {
-        let currentScroll = document.documentElement.scrollTop,
-            int = setInterval(frame, 0);
-
-        function frame() {
-            if (0 > currentScroll) {
-                clearInterval(int);
-            } else {
-                currentScroll = currentScroll - 12;
-                document.documentElement.scrollTop = currentScroll;
-            }
+    scrollBehavior(to, from, savedPosition) {
+        if (savedPosition) {
+            return { ...savedPosition, behavior: 'smooth' };
         }
-        // return { x: 0, y: 0 }
+        if (to.hash) {
+            return {
+                el: to.hash,
+                behavior: 'smooth',
+            };
+        }
+        return { top: 0, behavior: 'smooth' };
     },
 });
+
+
 // router.beforeEach((to, from, next) => {
 //     const isAuthenticated = store.getters['authToken/loggedIn']
 //     if (to.meta.requiresAuth && !isAuthenticated) {

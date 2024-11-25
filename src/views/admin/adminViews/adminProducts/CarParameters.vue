@@ -19,13 +19,13 @@
                             <!-- /////// -->
 
                             <div class="flex px-6 justify-between items-center border-b border-[#EAECF0] pt-5 pb-[21px]">
-                                <h1 class="font-semibold text-[18px] text-[#1D2939]">Car Parameters</h1>
+                                <h1 class="font-semibold text-[18px] text-[#1D2939]">Recommendations</h1>
                                 <button @click="openAddAndEdit('Add', emptyParamObj)" class="gap-3 rounded-lg text-white flex items-center justify-center py-[10px] px-4 bg-[#12B76A]">
                                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M10.0001 4.1665V15.8332M4.16675 9.99984H15.8334" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
                                     </svg>
 
-                                    <span class="hidden sm:block">Add Parameter</span>
+                                    <span class="hidden sm:block">Add Recommendation</span>
                                 </button>
                             </div>
 
@@ -41,6 +41,7 @@
                                 <thead class="">
                                     <tr>
                                         <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-xs font-medium text-[#475467] sm:pl-6">Name</th>
+                                        <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-xs font-medium text-[#475467] sm:pl-6">Image</th>
                                         <th scope="col" class="sr-only px-3 py-3.5 text-left text-xs font-medium text-[#475467]">Actions</th>
                                     </tr>
                                 </thead>
@@ -48,7 +49,12 @@
                                     <tr v-for="(param, index) in parameters" :key="param.id" :class="index % 2 !== 0 ? undefined : 'bg-gray-50'">
                                         <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-[#101828] sm:pl-6">
                                             <div class="flex flex-col">
-                                                <span class="font-normal text-[#475467]">{{ param.name }}</span>
+                                                <span class="font-normal text-[#475467]">{{ param.description }}</span>
+                                            </div>
+                                        </td>
+                                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-[#101828] sm:pl-6">
+                                            <div class="flex flex-col">
+                                               <img :src="param.image.imageValue" class="h-8 w-8" alt="">
                                             </div>
                                         </td>
 
@@ -118,6 +124,7 @@ const emptyParamObj = ref({
     name: '',
     parameterType: '',
 });
+const id = ref('')
 const loadingParameters = ref(false);
 const actionLoading = ref(false);
 const parameters = ref([]);
@@ -158,15 +165,16 @@ const toggleAddAndEditModal = () => {
 const openAddAndEdit = (type, param) => {
     if (type === 'Add') {
         toggleAddAndEditModalText.value = {
-            title: 'New Parameter',
+            title: 'New Recommendation',
 
-            buttonText: 'Create Parameter',
+            buttonText: 'Create',
             param: param,
         };
     }
     if (type === 'Edit') {
+        id.value = param.id
         toggleAddAndEditModalText.value = {
-            title: 'Edit Parameter',
+            title: 'Edit Recommendation',
 
             buttonText: 'Save Changes',
             param: param,
@@ -180,7 +188,7 @@ const getParameters = () => {
     getParams(
         (res) => {
             loadingParameters.value = false;
-            parameters.value = res.data.data;
+            parameters.value = res.data.data.data;
         },
         (err) => {
             loadingParameters.value = false;
@@ -192,10 +200,11 @@ const action = ({ action, data }) => {
     if (action === 'Edit Parameter') {
         actionLoading.value = true;
         updateParam(
+            id.value,
             data,
             (res) => {
                 actionLoading.value = false;
-                Util.handleGlobalAlert(true, 'success', 'Param Successfully Updated');
+                Util.handleGlobalAlert(true, 'success', 'Recommendation Successfully Updated');
                 toggleAddAndEditModal();
                 getParameters();
             },
@@ -213,7 +222,7 @@ const action = ({ action, data }) => {
             data,
             (res) => {
                 actionLoading.value = false;
-                Util.handleGlobalAlert(true, 'success', 'Param Successfully Added');
+                Util.handleGlobalAlert(true, 'success', 'Recommendation Successfully Added');
                 toggleAddAndEditModal();
                 getParameters();
             },

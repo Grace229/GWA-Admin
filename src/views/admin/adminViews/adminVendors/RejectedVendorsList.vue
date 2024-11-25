@@ -53,10 +53,12 @@
                             <table class="min-w-full divide-y divide-[#EAECF0]">
                                 <thead class="bg-[#F9FAFB]">
                                     <tr>
-                                        <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-xs font-medium text-[#475467] sm:pl-6">Vendor</th>
-                                        <th scope="col" class="px-3 py-3.5 text-left text-xs font-medium text-[#475467]">Business Name</th>
+                                        <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-xs font-medium text-[#475467] sm:pl-6">Subscriber</th>
+                                        <th scope="col" class="px-3 py-3.5 text-left text-xs font-medium text-[#475467]">phoneNumber</th>
+                                        <th scope="col" class="px-3 py-3.5 text-left text-xs font-medium text-[#475467]">Subscription</th>  
+                                        <th scope="col" class="px-3 py-3.5 text-left text-xs font-medium text-[#475467]">AddOns</th>
                                         <th scope="col" class="px-3 py-3.5 text-left text-xs font-medium text-[#475467]">Date</th>
-                                        <th scope="col" class="px-3 py-3.5 text-left text-xs font-medium text-[#475467]">Reason</th>
+                                        <th scope="col" class="px-3 py-3.5 text-left text-xs font-medium text-[#475467]">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-200 bg-white">
@@ -73,8 +75,22 @@
                                                 <span class="text-[#475467]">{{ vendor.address }}</span>
                                             </div>
                                         </td>
-                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-[#475467] font-normal">{{ Util.dateFormat(vendor.termsAcceptedAt) }}</td>
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-[#475467] font-normal">{{ Util.dateFormat(vendor.createdAt) }}</td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-[#475467] font-normal text-ellipsis truncate max-w-[400px]">{{ vendor.comment }}</td>
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-[#475467] font-normal">{{ Util.dateFormat(vendor.createdAt) }}</td>
+                                        <td class="whitespace-nowrap px-3 py-4 text-xs font-normal text-gray-500">
+                                            <div class="flex gap-1 max-w-max">
+                                                <!-- {{ onboardingStatusEnum[vendor.profileStatus] }} -->
+
+                                                <div v-if="vendor.isActive" class="text-[#027A48] bg-[#ECFDF3] py-[2px] px-2 max-w-max rounded-[16px]">
+                                                    <span>Active</span>
+                                                </div>
+
+                                                <div v-if="vendor.status == 'pending'" class="text-[#DC6803] bg-[#FEF3F2] py-[2px] px-2 max-w-max rounded-[16px]">
+                                                    <span>Pending</span>
+                                                </div>
+                                            </div>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -94,7 +110,7 @@ import { useRouter } from 'vue-router';
 import { ref, provide, reactive, onMounted, watch } from 'vue';
 import PaginationComponent from '@/components/reusable/PaginationComponent.vue';
 
-import { getAllVendors } from '@/services/AdminServices';
+import { getAllSubscribers} from '@/services/AdminServices';
 import RejectedVendorFilter from '@/views/admin/adminViews/adminVendors/RejectedVendorFilter.vue';
 import TableMenuIcon from '@/views/admin/svg/TableMenuIcon.vue';
 
@@ -162,12 +178,12 @@ const vendors = ref([
 
 const getVendors = () => {
     loading.value = true;
-    getAllVendors(
-        state.params,
+    getAllSubscribers(
+        // state.params,
         (res) => {
             loading.value = false;
-            vendors.value = res.data.data;
-            state.params.total = res.data.total;
+            vendors.value = res.data.data.data.data;
+            state.params.total = res.data.data.data.total;
         },
         (err) => {
             loading.value = false;

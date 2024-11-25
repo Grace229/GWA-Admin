@@ -185,7 +185,7 @@
                     <NotificationsButton />
                 </div>
 
-                <RefreshToken />
+                <!-- <RefreshToken /> -->
             </div>
             <AutoLogout />
 
@@ -265,7 +265,7 @@ const navigation = ref([
     { name: 'Subscriptions', href: '/admin/subscriptions', icon: FeesAndCommissionIcon, current: false },
     { name: 'Admin Users', href: '/admin/admin_users', icon: AdminUsersIcon, current: false },
     { name: 'Transactions', href: '/admin/orders', icon: PaymentsIcon, current: false },
-    { name: 'Promotions', href: '/admin/products', icon: ProductsIcon, current: false },
+    { name: 'Recommendations', href: '/admin/products', icon: ProductsIcon, current: false },
     { name: 'Audit Logs', href: '/admin/audit_logs', icon: AuditLogsIcon, current: false }
 
     // { name: 'Customers', href: '/admin/customers', icon: IconAdminUsers, current: false },

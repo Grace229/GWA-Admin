@@ -1,8 +1,8 @@
 <template>
     <div class="pt-[14px] container grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div class="mx-auto pt-[82px] pb-[148px] h1-p-text">
-            <h1 class="font-semibold text-[#101828] mb-[24px]">Get the AltDrive app</h1>
-            <p class="font-normal text-[#475467] max-w-[507px] mb-[48px]">Get the AltDrive appEnjoy 360 degree automotive solutions at your fingertips and get the best out of your car</p>
+            <h1 class="font-semibold text-[#101828] mb-[24px]">Get the Gallery Wellness Hub App</h1>
+            <p class="font-normal text-[#475467] max-w-[507px] mb-[48px]">Enjoy 360-degree wellness solutions at your fingertips and unlock the best version of yourself.</p>
 
             <div class="flex gap-[12px]">
                 <DownloadAppStore />

@@ -90,9 +90,9 @@ import { reactive, onMounted, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 
-onMounted(() => {
-    fetchNotifications();
-});
+// onMounted(() => {
+//     fetchNotifications();
+// });
 
 const loading = ref(false);
 const store = useStore();
@@ -156,10 +156,10 @@ const loadMore = () => {
     searchParams.pageSize += 3;
 };
 
-watch(
-    () => searchParams.pageSize,
-    () => {
-        fetchNotifications();
-    }
-);
+// watch(
+//     () => searchParams.pageSize,
+//     () => {
+//         fetchNotifications();
+//     }
+// );
 </script>

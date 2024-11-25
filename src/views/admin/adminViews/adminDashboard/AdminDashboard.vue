@@ -1,6 +1,6 @@
 <template>
     <div>
-        <AdminDashboardNav />
+        <!-- <AdminDashboardNav /> -->
 
         <div class="flex flex-col gap-6 mt-[26px]">
             <AdminDashboardCards />
@@ -27,22 +27,28 @@ const salesData = ref([]);
 const statsLoading = ref(false);
 const chartLoading = ref(false);
 const dashboardState = reactive({
-    stats: { vendors: 0, customers: 0, products: 0, totalSales: 0, totalPayment: 0 },
+    stats: { users: 0, subscribers: 0, subscriptions: 0, transactions: 0, totalPayment: 0 },
     searchParams: {
         from: '',
         to: '',
     },
 });
+
 const yearData = computed(() => (salesData.value[0] ? salesData.value[0] : []));
 
 const fetchStats = () => {
     statsLoading.value = true;
     getAdminStats(
-        dashboardState.searchParams,
+        // dashboardState.searchParams,
         (res) => {
             statsLoading.value = false;
+console.log(res.data.data)
+            dashboardState.stats.users = res.data.data.users.total;
+            dashboardState.stats.subscribers = res.data.data.subscribers.total;
+            dashboardState.stats.subscriptions = res.data.data.subscriptions.total;
+            dashboardState.stats.transactions = res.data.data.transactions.total;
+            dashboardState.stats.users = res.data.data.totalPayment.total;
 
-            dashboardState.stats = res.data.data;
         },
         (err) => {
             statsLoading.value = false;

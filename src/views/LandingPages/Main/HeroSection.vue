@@ -1,35 +1,30 @@
 <template>
-    <div class="bgImg">
-        <div class="h-full w-full overlay">
+    <section class="relative h-screen flex items-center justify-center text-center text-white bg-cover bg-center"
+           style="background-image: url('/src/assets/images/AdminOnboarding3.jpg');">
+    
+    <!-- Overlay -->
+    <div class="absolute inset-0 hero-overlay"></div>
+    
+    <!-- Text Content -->
+
+        <div class="container pt-[129px] pb-[79px] grid grid-cols-1 gap-6 relative z-10">
+                <h1 class="font-bold text-[48px] text-[#FFFFFF] leading-[60px] md:w-[544px]">Gallery Wellness Hub</h1>
+
+                <p class="mb-[25px] font-normal text-[20px] text-[#F2F4F7] md:w-[480px]">Your fitness journey starts here. Join a vibrant community.</p>
+
+    </div>
+    
+  </section>
+    <!-- <div class="bgImg">
+        <div class=" w-full overlay">
             <div class="container pt-[129px] pb-[79px] grid grid-cols-1 gap-6">
-                <h1 class="font-bold text-[48px] text-[#FFFFFF] leading-[60px] md:w-[544px]">Get a new car in less than 60 days with our flexible payment plans</h1>
+                <h1 class="font-bold text-[48px] text-[#FFFFFF] leading-[60px] md:w-[544px]">Gallery Wellness Hub</h1>
 
-                <p class="mb-[25px] font-normal text-[20px] text-[#F2F4F7] md:w-[480px]">Our flexible payment plan allows you to own a car and pay monthly, 0% interest charged</p>
+                <p class="mb-[25px] font-normal text-[20px] text-[#F2F4F7] md:w-[480px]">Your fitness journey starts here. Join a vibrant community.</p>
 
-                <div
-                    class="max-w-[246px] sm:max-w-[696px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-[26px] px-[25px] sm:px-[30px] py-[25px] sm:py-[44px] rounded-[4px] shadow-xs bg-[#FFFFFF]"
-                >
-                    <IdSelect class="h-[40px]" v-model="queryParams.brand" :modelValue="queryParams.brand" :options="brands" label="Make" />
-                    <IdSelect class="h-[40px]" v-model="queryParams.model" :modelValue="queryParams.model" :options="models" label="Choose Model" />
-                    <IdSelect class="h-[40px]" v-model="queryParams.mileage" :options="mileageMenu" label="Mileage" />
-
-                    <CustomSelect class="h-[40px]" v-model="queryParams.condition" :options="newOrUsedMenu" label="New/Used" />
-
-                    <CustomSelect class="h-[40px]" v-model="queryParams.price" :options="priceMenu" label="Max Price" />
-
-                    <!-- <HeroBtn v-for="dropdown in dropdowns" :key="dropdown.name" :label="dropdown.name" /> -->
-                    <button
-                        @click="
-                            $router.push(`/search?brand=${queryParams.brand}&model=${queryParams.model}&mileage=${queryParams.mileage}&condition=${queryParams.condition}&price=${queryParams.price}`)
-                        "
-                        class="brandButton !h-[40px] flex items-center justify-center"
-                    >
-                        Search
-                    </button>
-                </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </template>
 
 <script setup>
@@ -170,13 +165,13 @@ watch(
 
 <style lang="scss" scoped>
 .bgImg {
-    background-image: url('/src/assets/images/LandingPage.png');
-    background-repeat: no-repeat;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+    background-image: url('/src/assets/images/AdminOnboarding3.jpg') no-repeat center center/cover;
+    width: 100%;
+    height: 350px;
 }
+.hero-overlay {
+      background: rgba(0, 0, 0, 0.6);
+    }
 
 .overlay {
     // mix-blend-mode: normal;

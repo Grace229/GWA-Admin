@@ -12,15 +12,15 @@
                 <p class="text-[#475467] font-medium text-sm">{{ data.title }}</p>
                 <span v-if="data.title === 'Total Payments'" class="text-[#101828] font-medium text-[24px]">{{ formatInteger(Number(dashboardState.stats.totalPayment)) }}</span>
                 <!-- <span v-else-if="data.title === 'Total Sales'" class="text-[#101828] font-medium text-[24px]">{{ formatCurrency(Number(dashboardState.stats.totalSales)) }}</span> -->
-                <span v-else-if="data.title === 'Total Sales'" class="text-[#101828] font-medium text-[24px]">{{
-                    formatCurrency(dashboardState.stats.totalSales).slice(1, formatCurrency(dashboardState.stats.totalSales).length - 3)
+                <span v-else-if="data.title === 'Transactions'" class="text-[#101828] font-medium text-[24px]">{{
+                    formatCurrency(dashboardState.stats.transactions).slice(1, formatCurrency(dashboardState.stats.transactions).length - 3)
                 }}</span>
 
-                <span v-else-if="data.title === 'Products'" class="text-[#101828] font-medium text-[24px]">{{ formatInteger(Number(dashboardState.stats.products)) }}</span>
+                <span v-else-if="data.title === 'Subscriptions'" class="text-[#101828] font-medium text-[24px]">{{ formatInteger(Number(dashboardState.stats.subscriptions)) }}</span>
 
-                <span v-else-if="data.title === 'Customers'" class="text-[#101828] font-medium text-[24px]">{{ formatInteger(Number(dashboardState.stats.customers)) }}</span>
+                <span v-else-if="data.title === 'Subscribers'" class="text-[#101828] font-medium text-[24px]">{{ formatInteger(Number(dashboardState.stats.subscribers)) }}</span>
 
-                <span v-else-if="data.title === 'Vendors'" class="text-[#101828] font-medium text-[24px]">{{ formatInteger(Number(dashboardState.stats.vendors)) }}</span>
+                <span v-else-if="data.title === 'Users'" class="text-[#101828] font-medium text-[24px]">{{ formatInteger(Number(dashboardState.stats.users)) }}</span>
 
                 <!-- <span v-else class="text-[#101828] font-medium text-[24px]">{{ data.value }}</span> -->
             </div>
@@ -37,20 +37,20 @@ const dashboardState = inject('dashboardState');
 const formatCurrency = inject('formatCurrency');
 const metricData = [
     {
-        title: 'Vendors',
-        value: computed(() => dashboardState.stats.vendors),
+        title: 'Users',
+        value: computed(() => dashboardState.stats.users),
     },
     {
-        title: 'Customers',
-        value: computed(() => dashboardState.stats.customers),
+        title: 'Subscribers',
+        value: computed(() => dashboardState.stats.subscribers),
     },
     {
-        title: 'Products',
-        value: computed(() => dashboardState.stats.products),
+        title: 'Subscriptions',
+        value: computed(() => dashboardState.stats.subscriptions),
     },
     {
-        title: 'Total Sales',
-        value: computed(() => dashboardState.stats.totalSales),
+        title: 'Transactions',
+        value: computed(() => dashboardState.stats.transactions),
     },
     {
         title: 'Total Payments',

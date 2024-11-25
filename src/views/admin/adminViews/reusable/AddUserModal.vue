@@ -63,7 +63,7 @@
                                     <span class="text-sm font-normal text-[#475467]">Enter the details for a new admin user</span>
                                 </div>
                                 <div class="grid grid-cols-2 gap-6">
-                                    <div class="col-span-2 input--error" :class="{ 'input--error': v$.role.$errors }">
+                                    <!-- <div class="col-span-2 input--error" :class="{ 'input--error': v$.role.$errors }">
                                         <label for="role" class="block text-sm font-medium text-[#344054]">Role</label>
                                         <div class="mt-1">
                                             <IdSelect class="h-[44px]" :options="Constants.rolesMenu" v-model="v$.role.$model" label="Select Role" :modelValue="form.role" />
@@ -74,7 +74,7 @@
                                                 {{ error.$message }}
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="col-span-2 grid grid-cols-2 gap-4">
                                         <div class="col-span-1">
                                             <label for="First Name" class="block text-sm font-medium text-[#344054]">First Name</label>
@@ -282,7 +282,7 @@
                                             </div>
 
                                             <div class="text-red-400 mt-1 text-xs">
-                                                <div class="text-red-400">
+                                                 <div class="text-red-400">
                                                     {{ stateErrMsg }}
                                                 </div>
                                             </div>
@@ -363,7 +363,7 @@ const form = reactive({
     state: null,
 });
 
-const inspectionAdminSelected = computed(() => form.role == 3);
+const inspectionAdminSelected = computed(() => true);
 
 const resetForm = () => {
     const newForm = {
